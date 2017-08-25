@@ -1,7 +1,6 @@
 package com.epam.utils;
 
-import com.epam.utils.validation.Messages;
-import com.epam.utils.validation.PasswordValidator;
+import com.epam.utils.validation.*;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -21,35 +20,35 @@ public class PasswordValidatorTests {
     private PasswordValidator passwordValidator;
 
     @Test
-    public void whenNullPassword() {
+    public void whenNullPassword() throws ValidationException {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(Messages.NOT_NULL_VALIDATION);
+        thrown.expectMessage(NotNullValidation.VALIDATION_FAILED_MESSAGE);
         passwordValidator.validate(null);
     }
 
     @Test
-    public void whenPasswordLengthNotBetween5And12() {
+    public void whenPasswordLengthNotBetween5And12() throws ValidationException {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(Messages.LENGTH_VALIDATION);
+        thrown.expectMessage(LengthValidation.VALIDATION_FAILED_MESSAGE);
         passwordValidator.validate("ram");
     }
 
     @Test
-    public void whenPasswordDoesNotMatchRegEx() {
+    public void whenPasswordDoesNotMatchRegEx() throws ValidationException {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(Messages.REGEX_PATTERN_VALIDATION);
+        thrown.expectMessage(PatternValidation.VALIDATION_FAILED_MESSAGE);
         passwordValidator.validate("password");
     }
 
     @Test
-    public void whenPasswordHasImmediateSequenceOfChars() {
+    public void whenPasswordHasImmediateSequenceOfChars() throws ValidationException {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(Messages.NO_IMMEDIATE_SAME_SEQUENCE_VALIDATION);
+        thrown.expectMessage(NoImmediateSameSequenceValidation.VALIDATION_FAILED_MESSAGE);
         passwordValidator.validate("pass1pass1");
     }
 
     @Test
-    public void whenPasswordIsValid() {
+    public void whenPasswordIsValid() throws ValidationException {
         passwordValidator.validate("ram123");
     }
 }
