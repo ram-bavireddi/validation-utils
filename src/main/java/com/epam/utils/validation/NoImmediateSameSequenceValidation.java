@@ -1,5 +1,7 @@
 package com.epam.utils.validation;
 
+import java.util.regex.Pattern;
+
 /**
  * Performs a specific validation, i.e., the value
  * must not contain any sequence of characters immediately
@@ -12,10 +14,10 @@ public class NoImmediateSameSequenceValidation implements ValidationRule<String>
     public static final String VALIDATION_FAILED_MESSAGE = "Must not contain any sequence of " +
             "characters immediately followed by the same sequence";
 
-    private final PatternValidation patternValidation;
+    private final Pattern pattern;
 
     public NoImmediateSameSequenceValidation() {
-        patternValidation = new PatternValidation("(.+)\\1+");
+        pattern = Pattern.compile("(.+)\\1+$");
     }
 
     /**
@@ -29,9 +31,7 @@ public class NoImmediateSameSequenceValidation implements ValidationRule<String>
      */
     @Override
     public void validate(String value) throws ValidationException {
-        try {
-            patternValidation.validate(value);
-        } catch (ValidationException e) {
+        if (pattern.matcher(value).find()) {
             throw new ValidationException(VALIDATION_FAILED_MESSAGE);
         }
     }

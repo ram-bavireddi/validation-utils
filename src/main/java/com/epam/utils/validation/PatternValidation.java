@@ -46,7 +46,7 @@ public class PatternValidation implements ValidationRule<String> {
      */
     @Override
     public void validate(String value) throws ValidationException {
-        if (!pattern.matcher(value).find()) {
+        if (!pattern.matcher(value).matches()) {
             throw new ValidationException(createValidationFailedMessage());
         }
     }

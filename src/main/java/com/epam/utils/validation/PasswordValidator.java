@@ -1,7 +1,7 @@
 package com.epam.utils.validation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,7 +38,7 @@ public class PasswordValidator {
      * @param validationRules the list of validation rules to apply
      */
     public PasswordValidator(List<ValidationRule<String>> validationRules) {
-        Collections.copy(this.validationRules, validationRules);
+        this.validationRules = new ArrayList<>(validationRules);
     }
 
     /**
